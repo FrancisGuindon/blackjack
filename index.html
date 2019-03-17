@@ -1,0 +1,151 @@
+<!-- 
+    Nom : Francis Guindon
+    Date : 07/03/2019
+    Code permanent : GUIF04049903
+    But : Programmer un jeu BlackJack.
+-->
+
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="blackjack.css">
+
+    <title>BlackJack</title>
+    <link rel="shortcut icon" type="image/x-icon" href="companie i guess.ico">
+</head>
+
+<body onload="initialiserJeu()">
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1>BLACKJACK</h1>
+        </div>
+        <div class="row justify-content-end">
+            <a href="#" data-toggle="modal" data-target="#reglements">
+                Règlements
+            </a>
+        </div>
+        <br>
+        <!-- Modal -->
+        <div class="modal fade" id="reglements" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Règlements</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <p>Le but du jeu <strong>BLACKJACK</strong> est de battre le croupier sans dépasser 21.
+                                Dès que le joueur fait plus de 21, il perd sa mise. La valeur des cartes est la
+                                suivante :</p>
+                            <ul>
+                                <li>de 2 à 10 = valeur de la carte</li>
+                                <li>figure = 10</li>
+                                <li>AS = 1 ou 11</li>
+                            </ul>
+                            <p>Pour Débuter une partie, le joueur doit cliquer sur <strong>JOUER</strong>. Par la
+                                suite, le joueur choisi une mise et clique sur le bouton <strong>MISER</strong>
+                                pour confirmer sa mise. Deux (2) cartes sont distribuées au joueur et une carte
+                                visible et une carte cachée au croupier. Le joueur doit indiquer s'il désire
+                                recevoir une nouvelle carte en cliquant sur le bouton <strong>TIRER</strong> ou
+                                s'il désire arrêter en cliquant sur le bouton <strong>RESTER</strong>. Une fois
+                                terminée, le croupier retourne sa carte cachée et recois des cartes tant que le
+                                total est inférieur à 17. Pour terminer, le joueur ou le croupier encaisse les
+                                gains.</p>
+                            <p>Bonne partie !</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <fieldset class="border" id="fdsCroupier">
+                <legend><span id="croupier">CROUPIER</span> <span id="pointsC"></span></legend>
+                <div id="zoneCroupier">
+                    <!-- Cartes du croupier -->
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="row justify-content-center">
+            <h2>MISE : <span id="miseSpan">- $</span></h2>
+        </div>
+
+        <div class="row">
+            <fieldset class="border" id="fdsJoueur">
+                <legend><span id="nom"></span><span id="pointsJ"></span></legend>
+                <div id="zoneJoueur">
+                    <!-- Cartes du joueur -->
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="row justify-content-center">
+            <h2 id="argent"></h2>
+        </div>
+
+        <div class="row justify-content-center">
+            <button type="button" class="btn btn-light btn-space" onclick="Jouer();" id="btnJouer">JOUER</button>
+        </div>
+
+        <div id="miser">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-light btn-space" onclick="Miser();">Miser</button>
+            </div>
+            <form class="row justify-content-center">
+                <div class="justify-content-center">
+                    <input type="radio" name="mise" id="5$" value="5" checked>
+                    <label for="5$">5$</label>
+
+                    <input type="radio" name="mise" id="10$" value="10">
+                    <label for="10$">10$</label>
+
+                    <input type="radio" name="mise" id="25$" value="25">
+                    <label for="25$">25$</label>
+
+                    <input type="radio" name="mise" id="100$" value="100">
+                    <label for="100$">100$</label>
+            </form>
+        </div>
+
+        <div class="row justify-content-center">
+            <button type="button" class="btn btn-light" id="btnRester" onclick="Rester()">Rester</button>
+            <button type="button" class="btn btn-light" id="btnTirer" onclick="Tirer()">Tirer</button>
+        </div>
+    </div>
+    <span class="row justify-content-center" id="msg-erreur"></span>
+
+    <div class="row justify-content-center">
+        <small><i>« N'oubliez pas : Le jeu doit rester un jeu »</i></small>
+    </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="fonctions.js"></script>
+</body>
+
+</html>
