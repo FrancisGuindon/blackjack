@@ -3,6 +3,7 @@
     Date : 07/03/2019
     Code permanent : GUIF04049903
     But : Programmer un jeu BlackJack.
+    test git
 */
 
 // #region Initialisation
