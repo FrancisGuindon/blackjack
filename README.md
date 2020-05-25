@@ -1,2 +1,2 @@
 # blackjack
-test
+Simple blackjack game made with JS
